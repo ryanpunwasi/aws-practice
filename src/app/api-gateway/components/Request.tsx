@@ -3,6 +3,7 @@ import { useState } from "react";
 
 export const Request = () => {
   const [data, setData] = useState(null);
+  const [numbers, setNumbers] = useState([0, 0]);
   const [status, setStatus] = useState<"idle" | "pending" | "failed">("idle");
 
   const sendRequest = async () => {
@@ -11,10 +12,12 @@ export const Request = () => {
     try {
       await new Promise(resolve => setTimeout(resolve, 2000));
       const response = await fetch(
-        "https://jsonplaceholder.typicode.com/todos/1"
+        `https://7208wvavp5.execute-api.us-east-1.amazonaws.com/Test?x=${numbers[0]}&y=${numbers[1]}`
       );
-      const json = await response.json();
-      setData(json);
+      const {
+        body: { sum },
+      } = await response.json();
+      setData(sum);
       setStatus("idle");
     } catch (error) {
       console.error(error);
@@ -22,8 +25,51 @@ export const Request = () => {
     }
   };
 
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    key: number
+  ) => {
+    setNumbers(prev => {
+      const newNumbers = [...prev];
+      newNumbers[key] = Number(event.target.value);
+      return newNumbers;
+    });
+  };
+
   return (
     <div className="flex flex-col gap-20 items-center justify-center">
+      <form className="max-w-sm mx-auto flex flex-col gap-2">
+        <label
+          htmlFor="number-input"
+          className="block text-sm font-medium text-gray-900 dark:text-white"
+        >
+          X
+        </label>
+        <input
+          type="number"
+          id="number-input"
+          aria-describedby="helper-text-explanation"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          required
+          placeholder="Enter a number"
+          onChange={e => handleChange(e, 0)}
+        />
+        <label
+          htmlFor="number-input2"
+          className="block text-sm font-medium text-gray-900 dark:text-white"
+        >
+          Y
+        </label>
+        <input
+          type="number"
+          id="number-input2"
+          aria-describedby="helper-text-explanation"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          required
+          placeholder="Enter a number"
+          onChange={e => handleChange(e, 1)}
+        />
+      </form>
       {status === "idle" && (
         <button
           onClick={sendRequest}
