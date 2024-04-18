@@ -38,7 +38,13 @@ export const Request = () => {
 
   return (
     <div className="flex flex-col gap-20 items-center justify-center">
-      <form className="max-w-sm mx-auto flex flex-col gap-2">
+      <form
+        className="max-w-sm mx-auto flex flex-col gap-2"
+        onSubmit={e => {
+          e.preventDefault();
+          sendRequest();
+        }}
+      >
         <label
           htmlFor="number-input"
           className="block text-sm font-medium text-gray-900 dark:text-white"
