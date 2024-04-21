@@ -58,7 +58,7 @@ export const Request = () => {
         <button
           disabled={postId === ""}
           onClick={sendRequest}
-          className="disabled:brightness-75 w-48 rounded-lg dark:bg-indigo-600 text-white text-sm filter saturate-200 px-3 py-2 dark:hover:bg-indigo-500 dark:active:bg-indigo-700"
+          className="disabled:brightness-75 w-48 rounded-lg dark:bg-indigo-600 text-white text-sm filter saturate-200 px-3 py-2 dark:hover:bg-indigo-500 dark:disabled:hover:bg-indigo-600 dark:active:bg-indigo-700"
         >
           Send Request
         </button>
