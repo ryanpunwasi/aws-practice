@@ -33,6 +33,7 @@ export const Request = () => {
         className="max-w-sm mx-auto flex flex-col gap-2"
         onSubmit={e => {
           e.preventDefault();
+          setPostId("");
           sendRequest();
         }}
       >
@@ -43,6 +44,7 @@ export const Request = () => {
           Post Id
         </label>
         <input
+          value={postId}
           type="number"
           id="number-input"
           aria-describedby="helper-text-explanation"
