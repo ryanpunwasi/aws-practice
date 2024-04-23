@@ -10,7 +10,6 @@ export const Request = () => {
     setStatus("pending");
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
       const response = await fetch(
         `https://b36s50oxja.execute-api.us-east-1.amazonaws.com/Test?post_id=${postId}`
       );
